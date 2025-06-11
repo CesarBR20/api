@@ -63,6 +63,7 @@ def solicitar_cfdi_desde_sat(rfc, inicio, fin, tipo_solicitud, tipo_comp):
         f.write("")
         
     s3_paquetes_path = f"{base_s3_path}/{anio}/paquetes/.keep"
+    upload_file_to_s3(bucket, s3_paquetes_path, keep_paths)
     
 
     return id_solicitud
