@@ -111,9 +111,13 @@ async def verificar_solicitudes(
     temp_dir = f"/tmp/{rfc}/solicitudes/{year}"
     token_path = f"/tmp/{rfc}/token.txt"
 
-    verify_sat_requests(token_path, rfc, temp_dir)
+    resultados = verify_sat_requests(token_path, rfc, temp_dir)
 
-    return {"message": "Verificación de solicitudes completada"}
+    return {
+        "message": "Verificación de solicitudes completada",
+        "resultados": resultados
+    }
+
 
 @router.post("/descargar-paquetes/")
 async def descargar_paquetes(
