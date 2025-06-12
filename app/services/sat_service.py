@@ -174,6 +174,16 @@ def verify_sat_requests(token_path, rfc, temp_dir):
         nodo_paquetes = tree.find(".//{http://DescargaMasivaTerceros.sat.gob.mx}IdsPaquetes")
         if nodo_paquetes is not None and nodo_paquetes.text:
             ids_paquetes = [p for p in nodo_paquetes.text.strip().split("|") if p]
+            
+        if estado == "3":
+            paquetes_path = os.path.join(temp_dir, "paquetes.txt")
+            with open(paquetes_path, "w", encoding ="utf-8") as f:
+                for paquete in ids_paquetes:
+                    f.write(paquete + "\n")
+            
+            s3_paquetes_path = f"clientes/{rfc}/{year}/soliciudes/paquetes.txt"
+            from app.services.s3_service import upload_to_s3
+            upload_to_s3(paquetes_path, s3_paquetes_path)
 
         resultados.append({
             "id_solicitud": id_solicitud,
